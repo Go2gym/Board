@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<th:block layout:fragment="css">
+    <style>
+        .fieldError {
+            color: #bd2130;
+        }
+    </style>
+</th:block>
+<body>
+    <div class="register-wrapper">
+        <h2>회원가입</h2>
+        <form method="post" action="/signup" th:object="${memberFormDTO}">
+            <div>
+                <label>이 름 : </label>
+                <input type="text" th:field="*{name}" placeholder="Name">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
+            </div>
+            <div>
+                <label>닉 네 임 : </label>
+                <input type="text" th:field="*{nickname}" placeholder="nickname">
+                <input type="button" id="checkNickname" value="중복검사" onclick="vaildNickname()"><br/>
+                <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError">Incorrect data</p>
+            </div>
+            <div>
+                <label>아 이 디 : </label>
+                <input type="text" th:field="*{username}" placeholder="ID">
+                <input type="button" id="checkUsername" value="중복검사" onclick="vaildUsername()"><br/>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError">Incorrect data</p>
+            </div>
+            <div>
+                <label>비밀번호 : </label>
+                <input type="text" th:field="*{password}" placeholder="Password">
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError">Incorrect data</p>
+            </div>
+            <button type="submit">회원가입</button>
+        </form>
+    </div>
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    
+    <script>
+
+        function vaildUsername() {
+            console.log(1);
+            let username = $("#username").val();
+
+            $.ajax({
+                type: 'post', //post 형식으로 controller 에 보내기위함!!
+                url: "/checkUsername.do", // 컨트롤러로 가는 mapping 입력
+                data: { "username": username }, // 원하는 값을 중복확인하기위해서  JSON 형태로 DATA 전송
+                success: function (data) {
+                    if (data == "Y") { // 만약 성공할시
+                        result = "사용 가능한 아이디입니다.";
+                        $("#resultCheckUsername").html(result).css("color", "green");
+                        $("#password").trigger("focus");
+                    } else if (data == "N") { // 만약 실패할시
+                        result = "이미 사용중인 아이디입니다.";
+                        $("#resultCheckUsername").html(result).css("color", "red");
+                        $("#username").val("").trigger("focus");
+                    }
+
+                },
+                error: function (error) { alert(error); }
+            })
+        }
+
+        function vaildNickname() {
+            console.log(1);
+            let nickname = $("#nickname").val();
+
+            $.ajax({
+                type: 'post', //post 형식으로 controller 에 보내기위함!!
+                url: "/checkNickname.do", // 컨트롤러로 가는 mapping 입력
+                data: { "nickname": nickname }, // 원하는 값을 중복확인하기위해서  JSON 형태로 DATA 전송
+                success: function (data) {
+                    if (data == "Y") { // 만약 성공할시
+                        result = "사용 가능한 닉네임입니다.";
+                        $("#resultCheckNickname").html(result).css("color", "green");
+                        $("#username").trigger("focus");
+
+                    } else { // 만약 실패할시
+                        result = "이미 사용중인 닉네임입니다.";
+                        $("#resultCheckNickname").html(result).css("color", "red");
+                        $("#nickname").val("").trigger("focus");
+                    }
+
+                },
+                error: function (error) { alert(error); }
+            })
+        }
+    </script>
+</body>
+
+</html>

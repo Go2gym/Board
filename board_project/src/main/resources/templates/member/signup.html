@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>회원가입</title>
+</head>
+<th:block layout:fragment="css">
+    <style>
+        .fieldError {
+            color: #bd2130;
+        }
+
+        .UsernameValidatePass {
+            color: #008000;
+            display: none;
+        }
+
+        .UsernameValidateFali {
+            color: #bd2130;
+            display: none;
+        }
+
+        .NicknameValidatePass {
+            color: #008000;
+            display: none;
+        }
+
+        .NicknameValidateFali {
+            color: #bd2130;
+            display: none;
+        }
+    </style>
+</th:block>
+
+<body>
+    <div class="register-wrapper">
+        <h2>회원가입</h2>
+        <form method="post" action="/signup" th:object="${memberFormDTO}">
+            <div>
+                <label>이 름 : </label>
+                <input type="text" th:field="*{name}" placeholder="Name">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
+            </div>
+            <div>
+                <label>닉 네 임 : </label>
+                <input type="text" th:field="*{nickname}" name="nickname" id="nickname" oninput="duplicateCheckNickname()" placeholder="Nickname">
+                <span class="NicknameValidatePass">사용 가능한 닉네임입니다.</span>
+                <span class="NicknameValidateFali">이미 존재하는 닉네임입니다.</span>
+                <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError">Incorrect data</p>
+                
+            </div>
+            <div>
+                <label>아 이 디 : </label>
+                <input type="text" th:field="*{username}" name="username" id="username" oninput="duplicateCheckUsername()" placeholder="ID">
+                <!-- id ajax 중복체크 -->
+                <span class="UsernameValidatePass">사용 가능한 아이디입니다.</span>
+                <span class="UsernameValidateFali">이미 존재하는 아이디입니다.</span>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError">Incorrect data</p>
+            </div>
+            <div>
+                <label>비밀번호 : </label>
+                <input type="text" th:field="*{password}" placeholder="Password">
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError">Incorrect data</p>
+            </div>
+            <button type="submit">회원가입</button>
+        </form>
+    </div>
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        function duplicateCheckUsername() {
+            let username = $('#username').val(); //id값이 "id"인 입력란의 값을 저장
+            $.ajax({
+                url: '/checkUsername.do', //Controller에서 요청 받을 주소
+                type: 'post', //POST 방식으로 전달
+                data: { username: username },
+                success: function (data) { //컨트롤러에서 넘어온 cnt값을 받는다 
+                    if (!data) { // validateResult가 False일 경우 사용 가능한 아이디
+                        $('.UsernameValidatePass').css("display", "inline-block");
+                        $('.UsernameValidateFali').css("display", "none");
+                    } else { //validateResult가 true면 사용할 수 없는 아이디
+                        $('.UsernameValidateFali').css("display", "inline-block");
+                        $('.UsernameValidatePass').css("display", "none");
+                        alert("아이디를 다시 입력해주세요");
+                        $('#username').val('');
+                    }
+                },
+                error: function () {
+                    alert("에러입니다");
+                }
+            });
+        };
+
+        function duplicateCheckNickname() {
+            let nickname = $('#nickname').val(); //id값이 "id"인 입력란의 값을 저장
+            $.ajax({
+                url: '/checkNickname.do', //Controller에서 요청 받을 주소
+                type: 'post', //POST 방식으로 전달
+                data: { nickname: nickname },
+                success: function (data) { //컨트롤러에서 넘어온 cnt값을 받는다 
+                    if (!data) { // validateResult가 False일 경우 사용 가능한 아이디
+                        $('.NicknameValidatePass').css("display", "inline-block");
+                        $('.NicknameValidateFali').css("display", "none");
+                    } else { //validateResult가 true면 사용할 수 없는 아이디
+                        $('.NicknameValidateFali').css("display", "inline-block");
+                        $('.NicknameValidatePass').css("display", "none");
+                        alert("아이디를 다시 입력해주세요");
+                        $('#nickname').val('');
+                    }
+                },
+                error: function () {
+                    alert("에러입니다");
+                }
+            });
+        };
+    </script>
+    </body>
+    
+    </html>

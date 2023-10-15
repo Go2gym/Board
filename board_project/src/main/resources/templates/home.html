@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        #topBar {
+            display: flex;
+        }
+
+        #logoImg {
+            background-color: violet;
+            text-align: center;
+            width: 50%;
+            flex: 1;
+        }
+
+        #homeMenu {
+            background-color: rosybrown;
+            flex: 3;
+            text-align: center;
+        }
+
+        #memberFunction {
+            background-color: bisque;
+            flex: 1;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="topBar">
+            <div id="logoImg">
+                <p>로고</p>
+            </div>
+            <div id="homeMenu">
+                <p>
+                    <a href="/dietRecommendation">식단 추천</a>
+                    <a href="/freeboard">자유 게시판</a>
+                </p>
+            </div>
+            <div id="memberFunction">
+                <p style="text-align: right;">
+                    <a href="/signin">로그인</a>
+                    <a href="/signup">회원가입</a>
+                </p>
+            </div>
+        </div>
+        <div>
+            <hr>
+            <div>
+                Main입니다.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
