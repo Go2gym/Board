@@ -2,20 +2,39 @@ package hwan.board.board_project.service;
 
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import hwan.board.board_project.domain.Member;
 import hwan.board.board_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+@Slf4j
+public class MemberServiceImpl implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
     @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member findMember = memberRepository.findByUsername(username);
+        System.out.println("here I'm hehre!!!!!!!!!!1 ");
+        if(findMember == null) {
+            throw new UsernameNotFoundException("Not found: " + username);
+        }
+        log.info("findMember : {}", findMember);
+        return User.builder()
+                    .username(findMember.getUsername())
+                    .password(findMember.getPassword())
+                    .build();
+    }
+
     @Transactional
     public Member saveMember(Member member) {
         duplicateDuplicateMember(member);
@@ -23,7 +42,6 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.save(member);
     }
 
-    @Override
     public void duplicateDuplicateMember(Member member) {
         Optional<Member> findMember = memberRepository.findByUsernameAndNickname(member.getUsername(), member.getNickname());
         if(findMember.isPresent()) {
@@ -31,12 +49,10 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
-    @Override
     public boolean usernameDuplicateCheck(String username) {
         return memberRepository.existsByUsername(username);
     }
     
-    @Override
     public boolean nicknameDuplicateCheck(String nickname) {
         return memberRepository.existsByNickname(nickname);
     }

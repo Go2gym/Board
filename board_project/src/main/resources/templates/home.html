@@ -42,11 +42,15 @@
                     <a href="/freeboard">자유 게시판</a>
                 </p>
             </div>
-            <div id="memberFunction">
-                <p style="text-align: right;">
+            <div>
+                <p th:if="${!isSignedIn}" style="text-align: right;">
                     <a href="/signin">로그인</a>
                     <a href="/signup">회원가입</a>
                 </p>
+            </div>
+            <div sec:authorize="isAuthenticated()" id="memberFunction" style="display: flex;">
+                <p sec:authentication="name"></p>
+                <a href="/signout.do">로그아웃</a>
             </div>
         </div>
         <div>

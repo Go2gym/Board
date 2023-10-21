@@ -10,11 +10,17 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 @EnableWebSecurity
+@EnableMethodSecurity
 @Configuration
-public class Config {
+@RequiredArgsConstructor
+public class SecurityConfig {
     
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -27,8 +33,9 @@ public class Config {
                 .authorizeHttpRequests(
                     authorize -> authorize
                     .requestMatchers(new AntPathRequestMatcher("/h2/**")
-                                    ,new AntPathRequestMatcher("/signin")
+                                    ,new AntPathRequestMatcher("/signin*")
                                     ,new AntPathRequestMatcher("/signup")
+                                    ,new AntPathRequestMatcher("/signin/error")
                                     ,new AntPathRequestMatcher("/checkUsername.do")
                                     ,new AntPathRequestMatcher("/checkNickname.do")
                                     ,new AntPathRequestMatcher("/")).permitAll()
@@ -37,9 +44,8 @@ public class Config {
                 )
                 .formLogin(form -> form
                     .loginPage("/signin")
-                    .passwordParameter("password")
                     .loginProcessingUrl("/signin")
-                    .defaultSuccessUrl("/home")
+                    .defaultSuccessUrl("/")
                     .failureUrl("/signin")
                     .permitAll()
                 )

@@ -1,16 +1,28 @@
 package hwan.board.board_project.controller;
 
+import java.security.Principal;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import hwan.board.board_project.dto.MemberFormDTO;
+import lombok.AllArgsConstructor;
 
 @Controller
+@AllArgsConstructor
 public class HomeController {
     
     @GetMapping("/")
-    public String home() {  
+    public String home(Authentication authentication, Model model, Principal principal) {
+        
+        if(principal != null) {
+            model.addAttribute("isSignedIn", true);
+        }
+        else {
+            model.addAttribute("isSignedIn", false);
+        }
         return "/home";
     }
 
@@ -23,5 +35,15 @@ public class HomeController {
     public String signup(Model model) {  
         model.addAttribute("memberFormDTO", new MemberFormDTO());
         return "member/signup";
+    }
+
+    @GetMapping("/freeboard")
+    public String getFreeboard() {
+        return "/home/freeboard";
+    }
+
+    @GetMapping("/htmll")
+    public String getHtml() {
+        return "/index";
     }
 }
