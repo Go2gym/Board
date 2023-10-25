@@ -1,65 +1,54 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <style>
-        #topBar {
-            display: flex;
-        }
+    <meta charset="utf-8">
 
-        #logoImg {
-            background-color: violet;
-            text-align: center;
-            width: 50%;
-            flex: 1;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-        #homeMenu {
-            background-color: rosybrown;
-            flex: 3;
-            text-align: center;
-        }
 
-        #memberFunction {
-            background-color: bisque;
-            flex: 1;
-            text-align: right;
-        }
-    </style>
 </head>
 
 <body>
-    <div>
-        <div id="topBar">
-            <div id="logoImg">
-                <p>로고</p>
-            </div>
-            <div id="homeMenu">
-                <p>
-                    <a href="/dietRecommendation">식단 추천</a>
-                    <a href="/freeboard">자유 게시판</a>
-                </p>
-            </div>
-            <div>
-                <p th:if="${!isSignedIn}" style="text-align: right;">
-                    <a href="/signin">로그인</a>
-                    <a href="/signup">회원가입</a>
-                </p>
-            </div>
-            <div sec:authorize="isAuthenticated()" id="memberFunction" style="display: flex;">
-                <p sec:authentication="name"></p>
-                <a href="/signout.do">로그아웃</a>
+    <header class="p-3 text-bg-primary" style="background-color: #a7ca5d !important;">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/dietrecommendation" class="nav-link px-2 text-secondary">식단 추천</a></li>
+                    <li><a href="/freeboard" class="nav-link px-2 text-white">자유게시판</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+                <div sec:authorize="isAuthenticated()" style="display: flex; justify-content: center;
+                align-items: center;" >
+                    <div sec:authentication="name" class="me-3"></div>
+                    <button type="button" class="btn btn-outline-light me-2"
+                        onclick="location.href='/signout.do'">로그아웃</button>
+                </div>
+                <div class="text-end" th:if="${!isSignedIn}">
+                    <button type="button" class="btn btn-outline-light me-1"
+                        onclick="location.href='/signin'">로그인</button>
+                    <button type="button" class="btn btn-outline-light me-1"
+                        onclick="location.href='/signup'">회원가입</button>
+                </div>
             </div>
         </div>
-        <div>
-            <hr>
-            <div>
-                Main입니다.
-            </div>
-        </div>
-    </div>
+    </header>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

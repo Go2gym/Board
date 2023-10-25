@@ -24,7 +24,6 @@ public class MemberServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member findMember = memberRepository.findByUsername(username);
-        System.out.println("here I'm hehre!!!!!!!!!!1 ");
         if(findMember == null) {
             throw new UsernameNotFoundException("Not found: " + username);
         }

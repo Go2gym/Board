@@ -38,6 +38,8 @@ public class SecurityConfig {
                                     ,new AntPathRequestMatcher("/signin/error")
                                     ,new AntPathRequestMatcher("/checkUsername.do")
                                     ,new AntPathRequestMatcher("/checkNickname.do")
+                                    ,new AntPathRequestMatcher("/checkNickname.do")
+                                    ,new AntPathRequestMatcher("/freeboard")
                                     ,new AntPathRequestMatcher("/")).permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .anyRequest().authenticated()

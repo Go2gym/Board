@@ -23,6 +23,7 @@ public class HomeController {
         else {
             model.addAttribute("isSignedIn", false);
         }
+
         return "/home";
     }
 
@@ -38,12 +39,21 @@ public class HomeController {
     }
 
     @GetMapping("/freeboard")
-    public String getFreeboard() {
-        return "/home/freeboard";
+    public String getFreeboard(Model model, Principal principal) {
+
+        if(principal != null) {
+            model.addAttribute("isSignedIn", true);
+        }
+        else {
+            model.addAttribute("isSignedIn", false);
+        }
+
+        return "home/freeboard";
     }
 
-    @GetMapping("/htmll")
-    public String getHtml() {
-        return "/index";
+    @GetMapping("/dietrecommendation")
+    public String getDietRecommendation() {        
+
+        return "/home/dietRecommendation";
     }
 }
