@@ -4,16 +4,21 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Post extends BaseTime{
     
@@ -22,21 +27,23 @@ public class Post extends BaseTime{
     @Column(name = "userid")
     private Long boardId;
 
-    private String author;
-
     private String title;
 
     private String content;
 
-    private Integer hitCount;
+    private Long hitCount;
 
-
-    //forign key
-    @ManyToOne
+    //forign key 글쓴이임
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private Member member;
 
-    private LocalDateTime createdTime;
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
-    private LocalDateTime modifiedDate;
+    public void updateHitCount(Long hitCount) {
+        this.hitCount = hitCount;
+    }
 }

@@ -42,7 +42,7 @@ public class MemberServiceImpl implements UserDetailsService {
     }
 
     public void duplicateDuplicateMember(Member member) {
-        Optional<Member> findMember = memberRepository.findByUsernameAndNickname(member.getUsername(), member.getNickname());
+        Optional<Member> findMember = memberRepository.findByUsernameOrNickname(member.getUsername(), member.getNickname());
         if(findMember.isPresent()) {
             throw new IllegalStateException("이미 존재하는 정보입니다.");
         }

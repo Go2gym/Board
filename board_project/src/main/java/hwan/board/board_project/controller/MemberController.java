@@ -28,6 +28,13 @@ public class MemberController {
         return "member/memberHome";
     }
     
+    @GetMapping("/signin/error")
+    public String signinError(Model model) {
+        System.out.println("errorHere");
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
+        return "member/signin";
+    }
+    
     @PostMapping("/signup")
     public String postSignUp(@Valid @ModelAttribute("memberFormDTO") MemberFormDTO memberFormDTO, BindingResult bindingResult, Model model) {
 
@@ -44,13 +51,6 @@ public class MemberController {
         }
 
         return "redirect:/";
-    }
-
-    @GetMapping("/signin/error")
-    public String signinError(Model model) {
-        System.out.println("errorHere");
-        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
-        return "member/signin";
     }
 
     @PostMapping("/checkUsername.do")
