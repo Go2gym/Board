@@ -48,12 +48,12 @@ public class HomeController {
             model.addAttribute("isSignedIn", false);
         }
 
-        return "home/freeboard";
+        return "/board/freeboard";
     }
 
     @GetMapping("/dietrecommendation")
     public String getDietRecommendation() {        
 
-        return "/home/dietRecommendation";
+        return "/dietAPI/dietRecommendation";
     }
 }

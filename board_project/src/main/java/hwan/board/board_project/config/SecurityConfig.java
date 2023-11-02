@@ -39,6 +39,7 @@ public class SecurityConfig {
                                     ,new AntPathRequestMatcher("/checkUsername.do")
                                     ,new AntPathRequestMatcher("/checkNickname.do")
                                     ,new AntPathRequestMatcher("/checkNickname.do")
+                                    ,new AntPathRequestMatcher("/error**")
                                     ,new AntPathRequestMatcher("/freeboard")
                                     ,new AntPathRequestMatcher("/")).permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
