@@ -20,7 +20,7 @@ public class MemberServiceImplTest {
     private MemberRepository memberRepository;
 
     @Autowired
-    private MemberServiceImpl memberServiceImpl;
+    private MemberService memberServiceImpl;
     
     @BeforeEach
     void addMember() {

@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceImpl implements UserDetailsService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
@@ -54,5 +54,13 @@ public class MemberServiceImpl implements UserDetailsService {
     
     public boolean nicknameDuplicateCheck(String nickname) {
         return memberRepository.existsByNickname(nickname);
+    }
+
+    public Member findUsername(String username) {
+        return memberRepository.findByUsernameEquals(username);
+    }
+
+    public Member findUserId(Long userId) {
+        return memberRepository.findByUserId(userId);
     }
 }

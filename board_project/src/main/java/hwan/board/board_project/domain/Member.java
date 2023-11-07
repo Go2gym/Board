@@ -1,5 +1,8 @@
 package hwan.board.board_project.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import hwan.board.board_project.dto.MemberFormDTO;
@@ -8,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,17 +28,16 @@ public class Member {
     @Column(name = "userid")
     private Long userId;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
     private String nickname;
 
-    @Column(nullable = false, unique = true)
     private String username;
-
-    @Column(nullable = false)
+    
     private String password;
+
+    @OneToMany(mappedBy = "member")
+    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public Member(String name, String nickname, String username, String password) {
