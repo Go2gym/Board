@@ -45,7 +45,7 @@
 
     </header>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Board</h1>
+        <h1 class="mt-4">자유게시판</h1>
     
         <div class="card mb-4">
             <div class="card-header">
@@ -69,8 +69,10 @@
                         <tr th:each="post : ${list}">
                             <td th:text="${post.boardId}"></td>
                             <td th:text="${post.author}"></td>
-                            <td th:text="${post.title}"></td>
-                            <td th:text="${post.createdDate}"></td>
+                            <td>
+                                <a th:href="@{/freeboard/detail/{boardId}(boardId=${post.boardId})}" th:text="${post.title}"></a>                            
+                            </td>
+                            <td th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd')}"></td>
                         </tr>
                     </tbody>
                 </table>

@@ -8,6 +8,7 @@ import hwan.board.board_project.domain.Member;
 import hwan.board.board_project.domain.Post;
 import hwan.board.board_project.dto.PostDTO;
 import hwan.board.board_project.repository.PostRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,6 +47,21 @@ public class PostService {
                             .member(member)
                             .build();
         postRepository.save(posting);
+    }
+
+    public Post findPostDetail(Long boardId) {
+        return postRepository.findByBoardId(boardId);
+    }
+
+    @Transactional
+    public void updatePost(PostDTO postDTO, Long boardId) {
+        Post post = postRepository.findByBoardId(boardId);
+
+        post.update(postDTO.getTitle(), postDTO.getContent());
+    }
+
+    public void deletePost(Long boardId) {
+        postRepository.deleteById(boardId);
     }
 
 }

@@ -8,4 +8,6 @@ import hwan.board.board_project.domain.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long>{
     List<Post> findAllByOrderByCreatedDateDesc();
+
+    Post findByBoardId(Long boardId);
 }
