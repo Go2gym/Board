@@ -24,6 +24,7 @@ public class PostDTO {
         this.content = p.getContent();
     }
 
+    //update
     public PostDTO(String title, String content) {
         this.title = title;
         this.content = content;

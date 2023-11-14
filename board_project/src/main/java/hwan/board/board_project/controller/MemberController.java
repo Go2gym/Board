@@ -22,11 +22,6 @@ public class MemberController {
     
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
-
-    @GetMapping("/home")
-    public String getSignintHomePage(String username, String password) {
-        return "member/memberHome";
-    }
     
     @GetMapping("/signin/error")
     public String signinError(Model model) {

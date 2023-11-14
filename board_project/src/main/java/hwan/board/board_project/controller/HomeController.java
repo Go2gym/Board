@@ -39,8 +39,6 @@ public class HomeController {
         return "member/signup";
     }
 
-    
-
     @GetMapping("/dietrecommendation")
     public String getDietRecommendation() {        
 

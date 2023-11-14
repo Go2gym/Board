@@ -19,22 +19,6 @@ public class PostService {
     private final PostRepository postRepository;
 
     public List<Post> getPostList() {
-        /**
-        List<Post> all  = postRepository.findAll();
-        List<PostDto> res = new ArrayList<>();
-        
-
-        for (Post p: all) {
-            res.add(PostDto.builder()
-                        .title(p.getTitle())
-                        .author(p.getMember().getName())
-                        .content(p.getTitle())
-                        .createdDate(p.getCreatedDate())
-                        .hitCount(0L)
-                        .build());
-        }
-        **/
-        //return postRepository.findAll().stream().map(PostDTO::new).toList();
         return postRepository.findAllByOrderByCreatedDateDesc();
     }
 
