@@ -47,17 +47,20 @@ public class PostController {
         return "/board/freeboard";
     }
 
+
+    //글 작성
     @GetMapping("/posting")
-    public String getBoardWrite(Model model) {
+    public String getPostWrite(Model model) {
         model.addAttribute("postDTO", new PostDTO());
         return "/board/postwrite";
     }
 
+
     @PostMapping("/posting")
-    public String PostBoardWrite(@Validated @ModelAttribute PostDTO postDTO, Principal principal, BindingResult bindingResult) {
+    public String PostPostWrite(@Validated @ModelAttribute PostDTO postDTO, Principal principal, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()) {
-            return "/board/postwrite";
+            return "board/postwrite";
         }
 
         Long findMemberId = memberServiceImpl.findUsername(principal.getName()).getUserId();

@@ -44,6 +44,7 @@ public class PostService {
         post.update(postDTO.getTitle(), postDTO.getContent());
     }
 
+    @Transactional
     public void deletePost(Long boardId) {
         postRepository.deleteById(boardId);
     }

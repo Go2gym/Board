@@ -1,6 +1,5 @@
 package hwan.board.board_project.dto;
 
-import hwan.board.board_project.domain.Post;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -18,11 +17,6 @@ public class PostDTO {
 
     @NotNull(message = "본문은 필수 입력값입니다.")
     private String content;
-    
-    public PostDTO(Post p) {
-        this.title = p.getTitle();
-        this.content = p.getContent();
-    }
 
     //update
     public PostDTO(String title, String content) {
